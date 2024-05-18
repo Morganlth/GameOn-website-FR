@@ -226,7 +226,7 @@ main
 
 .bground
 {
-    display: none;
+    /* display: none; */
 
     position: fixed;
     top     : 0;

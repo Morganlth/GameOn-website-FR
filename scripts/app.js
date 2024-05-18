@@ -16,6 +16,7 @@
     // --JS
     import topnav_init from './topnav.js'
     import modal_init  from './modal.js'
+    import form_init   from './form.js'
 
     // --SCSS
 
@@ -31,6 +32,7 @@
     {
         topnav_init()
         modal_init()
+        form_init()
 
         console.log('init')
     }

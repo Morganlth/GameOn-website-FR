@@ -157,10 +157,10 @@ lang="fr"
 						class="modal-body"
 						>
 							<form
+							id="form"
 							name="reserve"
 							action="index.html"
 							method="get"
-							onsubmit="return validate();"
 							>
 							<!-- labels are not associated with their inputs -->
 								<div
@@ -179,6 +179,7 @@ lang="fr"
 									name="first"
 									minlength="2"
 									autocomplete="given-name"
+									required
 									/><br>
 								</div>
 				
@@ -197,6 +198,7 @@ lang="fr"
 									type="text"
 									name="last"
 									autocomplete="family-name"
+									required
 									/><br>
 								</div>
 				
@@ -215,6 +217,7 @@ lang="fr"
 									type="email"
 									name="email"
 									autocomplete="email"
+									required
 									/><br>
 								</div>
 				
@@ -252,6 +255,7 @@ lang="fr"
 									name="quantity"
 									min="0"
 									max="99"
+									required
 									>
 								</div>
 
@@ -389,7 +393,6 @@ lang="fr"
 									class="checkbox-input"
 									type="checkbox"
 									name="consent"
-									required
 									/>
 		
 									<!-- the required attribute is not valid on label -->
@@ -468,7 +471,7 @@ lang="fr"
 		balises en trop (une </div> toute seule...)
 		class en double (class="..." class="...")
 		attribut alt non conforme (alt="img")
-		label sans attribut for ou input
+		label sans attribut for ou input (prévue pour être corrigé apparemment)
 		input sans attribut name
 		label avec attribut required
 		input de consentement checké par défaut (intérêt ?)

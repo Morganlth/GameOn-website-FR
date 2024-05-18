@@ -353,21 +353,16 @@ input
 
     display: block;
 
-    opacity: 0;
-
-    margin-block: 7px;
+    margin-block: 5px 10px;
 
     color      : #e54858;
-    font-size  : .4em;
+    font-size  : 14px;
     text-align : right;
-    line-height: .3;
 
     transition: opacity .3s;
 }
 
-.formData[data-error-visible="true"]::after { opacity: 1; }
-
-.formData[data-error-visible="true"] .text-control { border: solid #e54858 2px; }
+.formData[data-error] .text-control { border: solid #e54858 2px; }
 
 .checkbox-input { display: none; }
 

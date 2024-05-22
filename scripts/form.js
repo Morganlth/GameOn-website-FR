@@ -80,6 +80,7 @@
             case    'first'    :
             case    'last'     : return name_test
             case    'email'    : return email_test
+            case    'birthdate': return birthdate_test
             case    'quantity' : return quantity_test
             case    'location1':
             case    'location2':
@@ -112,6 +113,21 @@
     function name_test() { if (this[0].value?.length < 2) throw new Error('Minimum 2 caractères.') }
 
     function email_test() { if (!/^\S+@\S+\.\S+$/.test(this[0].value)) throw new Error('Adresse email invalide.') } // simple email RegExp
+
+    function birthdate_test()
+    {
+        const
+        [_, Y, M, D] = this[0]?.value?.match(/^(\d{4})-(\d{2})-(\d{2})$/) ?? [], // I retrieve the values for the year (Y), month (M), and day (D) using a RegExp.
+        YEAR         = parseInt(Y, 10),
+        MONTH        = parseInt(M, 10),
+        DAY          = parseInt(D, 10)
+
+        // I could have passed the value to the Date Object constructor to check the validity of the value, but it passes both '2002-01' and '2002-01-29'.
+        // Here I'm doing simple checks, but for example '2002-02-31' would be accepted as a valid date.
+        if (isNaN(YEAR ) || YEAR  < 1907 || YEAR  > new Date().getFullYear()
+         || isNaN(MONTH) || MONTH < 1    || MONTH > 12
+         || isNaN(DAY  ) || DAY   < 1    || DAY   > 31) throw new Error('Renseignez une date de naissance valide.')
+    }
 
     function quantity_test()
     {

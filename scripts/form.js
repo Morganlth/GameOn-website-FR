@@ -41,6 +41,7 @@
 // #\-VARIABLES-\
 
     // --THIS
+    let form_SUCCESS
 
 
 // #\-FUNCTIONS-\
@@ -129,17 +130,26 @@
     // --*
     function form_eSubmit(e)
     {
-        const ERROR = form_test()
+        e.preventDefault() // stop form submission
 
-        if (ERROR) // in the event of an error, form submission is blocked and the error displayed
-        {
-            e.preventDefault()
+        form_SUCCESS?.remove() // suppresses the success message if it exists
 
-            ERROR.formdata?.setAttribute('data-error', ERROR.message)
-        }
+        const ERROR = form_test() // test form
+
+        if (ERROR) return ERROR.formdata?.setAttribute('data-error', ERROR.message) // in the event of an error, the error is displayed
+
+        form_createSuccess()
     }
 
 
 //=======@UTILS|
 
     // --*
+    function form_createSuccess() // adds a success message
+    {
+        const NODE = document.createElement('p')
+
+        NODE.innerText = 'Merci ! Votre réservation a été reçue.'
+
+        form_SUCCESS = FORM?.appendChild(NODE)
+    }

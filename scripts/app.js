@@ -33,8 +33,6 @@
         topnav_init()
         modal_init()
         form_init()
-
-        console.log('init')
     }
 
 

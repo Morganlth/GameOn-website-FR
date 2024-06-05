@@ -41,7 +41,11 @@
 // #\-VARIABLES-\
 
     // --THIS
-    let form_SUCCESS
+    let
+    form_SUCCESS,
+    form_TIMER
+    ,
+    form_TIMEOUT
 
 
 // #\-FUNCTIONS-\
@@ -65,7 +69,8 @@
                 if (TEST) accumulator.push( // added test to accumulator
                 {
                     formdata: e,
-                    test    : TEST.bind(INPUTS)
+                    inputs  : INPUTS,
+                    test    : TEST
                 })
             }
 
@@ -98,11 +103,11 @@
     // --TESTS
     function form_test() // after "form" submission or execute all tests for current values
     {
-        for (let {formdata, test} of FORM_TESTS)
+        for (let {formdata, inputs, test} of FORM_TESTS)
         {
             try
             {
-                test()
+                test(inputs)
 
                 formdata?.removeAttribute('data-error')
             }
@@ -110,14 +115,14 @@
         }
     }
 
-    function name_test() { if (this[0].value?.length < 2) throw new Error('Minimum 2 caractères.') }
+    function name_test(inputs = []) { if (inputs[0].value?.length < 2) throw new Error('Minimum 2 caractères.') }
 
-    function email_test() { if (!/^\S+@\S+\.\S+$/.test(this[0].value)) throw new Error('Adresse email invalide.') } // simple email RegExp
+    function email_test(inputs = []) { if (!/^\S+@\S+\.\S+$/.test(inputs[0].value)) throw new Error('Adresse email invalide.') } // simple email RegExp
 
-    function birthdate_test()
+    function birthdate_test(inputs = [])
     {
         const
-        [_, Y, M, D] = this[0]?.value?.match(/^(\d{4})-(\d{2})-(\d{2})$/) ?? [], // I retrieve the values for the year (Y), month (M), and day (D) using a RegExp.
+        [_, Y, M, D] = inputs[0]?.value?.match(/^(\d{4})-(\d{2})-(\d{2})$/) ?? [], // I retrieve the values for the year (Y), month (M), and day (D) using a RegExp.
         YEAR         = parseInt(Y, 10),
         MONTH        = parseInt(M, 10),
         DAY          = parseInt(D, 10)
@@ -129,16 +134,16 @@
          || isNaN(DAY  ) || DAY   < 1    || DAY   > 31) throw new Error('Renseignez une date de naissance valide.')
     }
 
-    function quantity_test()
+    function quantity_test(inputs = [])
     {
-        const VALUE = parseInt(this[0].value, 10)
+        const VALUE = parseInt(inputs[0].value, 10)
 
         if (isNaN(VALUE) || VALUE < 0) throw new Error('Renseignez une valeur numérique positive.')
     }
 
-    function location_test() { if (this.every(e => !e.checked)) throw new Error('Sélectionnez une localisation.') }
+    function location_test(inputs = []) { if (inputs.every(e => !e.checked)) throw new Error('Sélectionnez une localisation.') }
 
-    function checkbox1_test() { if (!this[0].checked) throw new Error('Veuillez accepter les conditions d\'utilisation.') }
+    function checkbox1_test(inputs = []) { if (!inputs[0].checked) throw new Error('Veuillez accepter les conditions d\'utilisation.') }
 
 
 //=======@EVENTS|
@@ -155,6 +160,8 @@
         if (ERROR) return ERROR.formdata?.setAttribute('data-error', ERROR.message) // in the event of an error, the error is displayed
 
         form_createSuccess()
+        // form_createTimer()
+        form_clear()
     }
 
 
@@ -165,7 +172,28 @@
     {
         const NODE = document.createElement('p')
 
+        NODE.className = 'success'
         NODE.innerText = 'Merci ! Votre réservation a été reçue.'
 
         form_SUCCESS = FORM?.appendChild(NODE)
+    }
+
+    // function form_createTimer()
+    // {
+
+    // }
+
+    function form_clear()
+    {
+        for (let {formdata, inputs} of FORM_TESTS)
+        {
+            formdata?.removeAttribute('data-error')
+
+            for (const INPUT of inputs) switch (INPUT?.type)
+            {
+                case    'radio'   :
+                case    'checkbox': INPUT.checked = false
+                default           : INPUT.value   = ''
+            }
+        }
     }

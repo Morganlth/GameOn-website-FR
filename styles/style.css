@@ -315,6 +315,8 @@ main
     text-align: justify;
 }
 
+
+
 label
 {
     display: inline-block;
@@ -449,6 +451,14 @@ input
 {
     font-size  : 16px;
     font-weight: normal;
+}
+
+.success
+{
+    margin        : 24px 0 0;
+    padding-inline: 8px;
+
+    background-color: #279e7a;
 }
 
 /* footer */

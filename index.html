@@ -179,7 +179,6 @@ lang="fr"
 									name="first"
 									minlength="2"
 									autocomplete="given-name"
-									required
 									/><br>
 								</div>
 				
@@ -198,7 +197,6 @@ lang="fr"
 									type="text"
 									name="last"
 									autocomplete="family-name"
-									required
 									/><br>
 								</div>
 				
@@ -217,7 +215,6 @@ lang="fr"
 									type="email"
 									name="email"
 									autocomplete="email"
-									required
 									/><br>
 								</div>
 				
@@ -255,7 +252,6 @@ lang="fr"
 									name="quantity"
 									min="0"
 									max="99"
-									required
 									>
 								</div>
 
@@ -386,7 +382,6 @@ lang="fr"
 								class="formData"
 								>
 								<!-- what's the point of checking the box? It's up to the user to give their consent, so we might as well not ask them... -->
-								<!-- Add the required attribute here rather than on the label -->
 								<!-- Some inputs have no name attribute -->
 									<input
 									id="checkbox1"
@@ -463,65 +458,6 @@ lang="fr"
 </html>
 
 <!--
-	Plusieurs erreurs dans le code HTML & CSS
-
-	#HTML
-
-		structure HTML vraiment moyenne (une div avec la class header... pourquoi ne pas utiliser la balise <header> directement...)
-		balises en trop (une </div> toute seule...)
-		class en double (class="..." class="...")
-		attribut alt non conforme (alt="img")
-		label sans attribut for ou input (prévue pour être corrigé apparemment)
-		input sans attribut name
-		label avec attribut required
-		input de consentement checké par défaut (intérêt ?)
-		image avec des dimensions sur "auto" (incorrect selon le W3C)
-
-	#CSS
- 
-		en voyant le css j'ai franchement pleuré, comment c'est possible de dupliquer des styles dans le même bloc de code...
-
-		dans les première lignes:
-	
-			* {
-				margin: 0;
-			}
-
-			body {
-				margin: 0;
-				margin: 0 auto;
-			}
-
-		le fichier s'appelle "modal.css" mais fourni du style pour l'ensemble de la page HTML
-		background pointant vers une image manquante (background-image: url("/background.png");)
-		--font-slab: var(--font-default); (pour ce projet aucun intérêt)
-		media queries en double
-
-		style en double ex:
-
-			.topnav a:hover {
-				background-color: #ff0000;
-				color: #ffffff;
-				border-radius: 15px;
-			}
-
-			.topnav a.active {
-				background-color: #ff0000;
-				color: #ffffff;
-				border-radius: 15px;
-			}
-	
-
-	Sur des petits projets comme celui ci, c'est grave de présenter de tels erreurs aux étudiants.
-	Vérifier le code avec un validateur HTML et/ou avec les outils comme DevTools c'est pas bien compliqué...
-	J'ai pris plus de temps à corriger que de réaliser le projet.
-	Je ne suis pas le dernier à faire des erreurs, encore récemment je pensais qu'il fallait mettre des attributs alt sur les liens,
-	mais dans le cadre d'une formation le travail devrait être soigné...
-
-	Je me suis permis de réécrire les fichiers css et js.
--->
-
-<!--
-	Ajouter un test pour la date de naissance ?
-	Implémentation du message de succès (ou ?)
+	I've deliberately removed the “required” attribute (and possibly others like “pattern”) from the inputs for the purposes of this exercise, so that I can test the JavaScript logic.
+	In a real project, it would be obvious not to omit them.
 -->

@@ -349,6 +349,8 @@ input
     font-size: 20px;
 }
 
+.formData[data-error]::after, .timer { font-size: 14px; }
+
 .formData[data-error]::after
 {
     content: attr(data-error);
@@ -357,9 +359,8 @@ input
 
     margin-block: 5px 10px;
 
-    color      : #e54858;
-    font-size  : 14px;
-    text-align : right;
+    color     : #e54858;
+    text-align: right;
 
     transition: opacity .3s;
 }
@@ -455,7 +456,9 @@ input
 
 .success
 {
-    margin        : 24px 0 0;
+    width: fit-content;
+
+    margin        : 24px auto 8px;
     padding-inline: 8px;
 
     background-color: #279e7a;

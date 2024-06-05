@@ -27,6 +27,16 @@
     // --THIS
     export default function modal_init() { modal_set() } // initialize
 
+    export function modal_update(show = false) // updates the modal by modifying its display
+    {
+        if (MODAL instanceof HTMLElement)
+        {
+            document.documentElement.classList[show ? 'add' : 'remove']('hidden')
+  
+            MODAL.style.display = show ? 'block' : 'none'
+        }
+    }
+
 
 // #\-CONSTANTES-\
 
@@ -67,15 +77,6 @@
     // --GET
 
     // --UPDATES
-    function modal_update(show = false) // updates the modal by modifying its display
-    {
-        if (MODAL instanceof HTMLElement)
-        {
-            document.documentElement.classList[show ? 'add' : 'remove']('hidden')
-  
-            MODAL.style.display = show ? 'block' : 'none'
-        }
-    }
 
     // --TESTS
 

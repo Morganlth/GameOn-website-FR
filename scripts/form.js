@@ -14,6 +14,7 @@
     // --LIB
 
     // --JS
+    import { modal_update } from './modal.js'
 
     // --SCSS
 
@@ -45,7 +46,7 @@
     form_SUCCESS,
     form_TIMER
     ,
-    form_TIMEOUT
+    form_TIMER_INTERVAL
 
 
 // #\-FUNCTIONS-\
@@ -54,6 +55,27 @@
     function form_set() { form_setEvents() }
 
     function form_setEvents() { FORM?.addEventListener('submit', form_eSubmit) } // adds a 'submit' event to 'form'
+
+    function form_setInterval(node) // changes the value of the timer's “time” node every second to count down, then closes the modal
+    {
+        if (!(node instanceof HTMLElement)) return
+
+        let time = 5
+
+        node.innerText = time + 's'
+
+        form_TIMER_INTERVAL = setInterval(() =>
+        {
+            node.innerText = --time + 's'
+
+            if (time <= 0)
+            {
+                modal_update(false)
+                form_destroyChildren()
+            }
+        },
+        1000)
+    }
 
     // --GET
     function form_getTests() // returns an array of tests to be performed to validate the form
@@ -145,6 +167,15 @@
 
     function checkbox1_test(inputs = []) { if (!inputs[0].checked) throw new Error('Veuillez accepter les conditions d\'utilisation.') }
 
+    // --DESTROY
+    function form_destroyChildren() // suppresses the success message and timer if it exists
+    {
+        clearInterval(form_TIMER_INTERVAL) // deletes "timer" interval
+    
+        form_SUCCESS?.remove()
+        form_TIMER  ?.remove()
+    }
+
 
 //=======@EVENTS|
 
@@ -153,14 +184,14 @@
     {
         e.preventDefault() // stop form submission
 
-        form_SUCCESS?.remove() // suppresses the success message if it exists
+        form_destroyChildren()
 
         const ERROR = form_test() // test form
 
         if (ERROR) return ERROR.formdata?.setAttribute('data-error', ERROR.message) // in the event of an error, the error is displayed
 
         form_createSuccess()
-        // form_createTimer()
+        form_createTimer()
         form_clear()
     }
 
@@ -170,20 +201,31 @@
     // --*
     function form_createSuccess() // adds a success message
     {
-        const NODE = document.createElement('p')
+        const SUCCESS = document.createElement('p')
 
-        NODE.className = 'success'
-        NODE.innerText = 'Merci ! Votre réservation a été reçue.'
+        SUCCESS.className = 'success'
+        SUCCESS.innerText = 'Merci ! Votre réservation a été reçue.'
 
-        form_SUCCESS = FORM?.appendChild(NODE)
+        form_SUCCESS = FORM?.appendChild(SUCCESS)
     }
 
-    // function form_createTimer()
-    // {
+    function form_createTimer() // adds a timer
+    {
+        const
+        TIMER = document.createElement('p'),
+        TIME  = document.createElement('span')
 
-    // }
+        TIMER.className = 'timer'
+        TIMER.innerText = 'La modale se fermera automatiquement dans: '
 
-    function form_clear()
+        TIMER.appendChild(TIME)
+
+        form_setInterval(TIME)
+
+        form_TIMER = FORM?.appendChild(TIMER)
+    }
+
+    function form_clear() // removes error messages and input values
     {
         for (let {formdata, inputs} of FORM_TESTS)
         {
